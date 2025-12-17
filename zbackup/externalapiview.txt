@@ -1,0 +1,18 @@
+POST   /api/module1/equipment
+GET    /api/module1/equipment
+GET    /api/module1/equipment/{id}
+
+----------------------------------
+
+
+POST (Submit Page-1 Form)
+fetch("/api/module1/equipment", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(formData)
+});
+
+GET (Review / Summary Page)
+fetch("/api/module1/equipment")
+  .then(res => res.json())
+  .then(setData);

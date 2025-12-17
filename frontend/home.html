@@ -1,164 +1,184 @@
+ <!-- Basic Page for Equipment Information Page -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>EUT Management</title>
+  <meta charset="UTF-8" />
+  <title>Module 1 – Equipment Information</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background: #f7f7f7;
-        }
+  <!-- React CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 
-        h2 {
-            color: #333;
-        }
+  <!-- Babel for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-        .form-box, .list-box {
-            background: #fff;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 6px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        input {
-            width: 100%;
-            padding: 8px;
-            margin: 6px 0 12px 0;
-        }
-
-        button {
-            padding: 10px 20px;
-            background: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #0056b3;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background: #f0f0f0;
-        }
-    </style>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    input, textarea, select {
+      width: 300px;
+      margin-bottom: 8px;
+      padding: 6px;
+    }
+    button {
+      padding: 8px 16px;
+      margin-top: 10px;
+    }
+    .section {
+      margin-top: 25px;
+      padding: 15px;
+      border: 1px solid #ccc;
+    }
+  </style>
 </head>
+
 <body>
+  <h2>Module-1: Equipment Information</h2>
+  <div id="root"></div>
 
-<h2>🔧 EUT Management System</h2>
+  <script type="text/babel">
+    const API_URL = "http://127.0.0.1:8000/api/module1/equipment";
 
-<!-- FORM for Entering All TextBox Entries for EUT -->
-<div class="form-box">
-    <h3>Add EUT Details</h3>
+    function App() {
+      const [form, setForm] = React.useState({
+        eut_name: "",
+        eut_quantity: "",
+        manufacturer_address: "",
+        model_no: "",
+        serial_no: "",
+        supply_voltage: "",
+        operating_frequency: "",
+        current: "",
+        weight_kg: "",
+        length_mm: "",
+        width_mm: "",
+        height_mm: "",
+        power_ports: "",
+        signal_ports: "",
+        software_name: "",
+        software_version: "",
+        industry_type: "",
+        other_industry: "",
+        preferred_testing_date: "",
+        additional_notes: "",
+        operating_frequency: null,
+        software_name: null,
+        software_version: null,
+        preferred_testing_date: null,
+        additional_notes: null
 
-    <input id="name" placeholder="Name of EUT" />
-    <input id="quantity" type="number" placeholder="Quantity" />
-    <input id="address" placeholder="Manufacturer Address" />
-    <input id="model" placeholder="Model Number" />
-    <input id="serial" placeholder="Serial Number" />
+      });
 
-    <button onclick="submitEUT()">Submit</button>
-    <p id="status"></p>
-</div>
+      const [data, setData] = React.useState([]);
 
-<!-- LIST of Stored EUTs -->
-<div class="list-box">
-    <h3>Stored EUTs</h3>
+      const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+      };
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Qty</th>
-                <th>Model</th>
-                <th>Serial</th>
-            </tr>
-        </thead>
-        <tbody id="eutTable"></tbody>
-    </table>
-</div>
-
-<script>
-    // IMPORTANT: This must match backend routes
-    const API_BASE = "/api";
-
-    function submitEUT() {
-        const data = {
-            name: document.getElementById("name").value,
-            quantity: Number(document.getElementById("quantity").value),
-            manufacturer_address: document.getElementById("address").value,
-            model_number: document.getElementById("model").value,
-            serial_number: document.getElementById("serial").value
-        };
-
-        fetch(`${API_BASE}/eut`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
+      const submitForm = () => {
+        fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...form,
+            eut_quantity: Number(form.eut_quantity),
+            weight_kg: Number(form.weight_kg),
+            length_mm: Number(form.length_mm),
+            width_mm: Number(form.width_mm),
+            height_mm: Number(form.height_mm)
+          })
         })
-        .then(res => {
-            if (!res.ok) throw new Error("Failed to add EUT");
-            return res.json();
-        })
+        .then(res => res.json())
         .then(() => {
-            document.getElementById("status").innerText = "✅ EUT added successfully";
-            clearForm();
-            loadEUTs();
-        })
-        .catch(err => {
-            document.getElementById("status").innerText = "❌ Error adding EUT";
-            console.error(err);
+          alert("Equipment saved successfully");
+          loadData();
         });
+      };
+
+      const loadData = () => {
+        fetch(API_URL)
+          .then(res => res.json())
+          .then(setData);
+      };
+
+      React.useEffect(loadData, []);
+
+      return (
+        <>
+          <div className="section">
+            <h3>Basic Equipment Information</h3>
+            <input name="eut_name" placeholder="Name of EUT" onChange={handleChange} />
+            <input name="eut_quantity" type="number" placeholder="Quantity" onChange={handleChange} />
+            <textarea name="manufacturer_address" placeholder="Manufacturer / Address" onChange={handleChange} />
+            <input name="model_no" placeholder="Model No" onChange={handleChange} />
+            <input name="serial_no" placeholder="Serial No" onChange={handleChange} />
+          </div>
+
+          <div className="section">
+            <h3>Technical Specifications</h3>
+            <input name="supply_voltage" placeholder="Supply Voltage" onChange={handleChange} />
+            <input name="operating_frequency" placeholder="Operating Frequency" onChange={handleChange} />
+            <input name="current" placeholder="Current" onChange={handleChange} />
+            <input name="weight_kg" type="number" placeholder="Weight (Kg)" onChange={handleChange} />
+            <input name="length_mm" type="number" placeholder="Length (mm)" onChange={handleChange} />
+            <input name="width_mm" type="number" placeholder="Width (mm)" onChange={handleChange} />
+            <input name="height_mm" type="number" placeholder="Height (mm)" onChange={handleChange} />
+          </div>
+
+          <div className="section">
+            <h3>Connectivity & Interfaces</h3>
+            <input name="power_ports" placeholder="Power Ports & Connector Type" onChange={handleChange} />
+            <input name="signal_ports" placeholder="Signal Lines & Connector Type" onChange={handleChange} />
+          </div>
+
+          <div className="section">
+            <h3>Software Information</h3>
+            <input name="software_name" placeholder="Software Name" onChange={handleChange} />
+            <input name="software_version" placeholder="Software Version" onChange={handleChange} />
+          </div>
+
+          <div className="section">
+            <h3>Industry / Application</h3>
+            <select name="industry_type" onChange={handleChange}>
+              <option value="">Select Industry</option>
+              <option>Telecommunication</option>
+              <option>Medical</option>
+              <option>Automotive</option>
+              <option>Industrial</option>
+              <option>Consumer Electronics</option>
+              <option>IoT</option>
+              <option>Aerospace & Defense</option>
+              <option>Energy & Power</option>
+              <option>Others</option>
+            </select>
+            <input name="other_industry" placeholder="If Others, specify" onChange={handleChange} />
+          </div>
+
+          <div className="section">
+            <h3>Testing & Notes</h3>
+            <input name="preferred_testing_date" type="date" onChange={handleChange} />
+            <textarea name="additional_notes" placeholder="Additional Notes" onChange={handleChange} />
+          </div>
+
+          <button onClick={submitForm}>Submit Equipment</button>
+
+          <div className="section">
+            <h3>Stored Equipment Records</h3>
+            <ul>
+              {data.map(item => (
+                <li key={item.id}>
+                  {item.eut_name} | {item.industry_type} | Model: {item.model_no}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      );
     }
 
-    function loadEUTs() {
-        fetch(`${API_BASE}/eut`)
-            .then(res => res.json())
-            .then(data => {
-                const table = document.getElementById("eutTable");
-                table.innerHTML = "";
-
-                data.forEach(e => {
-                    const row = `
-                        <tr>
-                            <td>${e.id}</td>
-                            <td>${e.name}</td>
-                            <td>${e.quantity}</td>
-                            <td>${e.model_number}</td>
-                            <td>${e.serial_number}</td>
-                        </tr>
-                    `;
-                    table.innerHTML += row;
-                });
-            });
-    }
-
-    function clearForm() {
-        document.getElementById("name").value = "";
-        document.getElementById("quantity").value = "";
-        document.getElementById("address").value = "";
-        document.getElementById("model").value = "";
-        document.getElementById("serial").value = "";
-    }
-
-    // Function to load data on page load
-    loadEUTs();
-</script>
-
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
 </body>
 </html>
