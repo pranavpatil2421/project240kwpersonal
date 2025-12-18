@@ -5,40 +5,45 @@ from sqlalchemy import Column, Integer, String, Float, Date, Text
 from backend.core.database import Base
 
 # ORM model for Equipment related Information
-class EquipmentInformation(Base):
-    __tablename__ = "module1_equipment_information"
+class Equipment(Base):
+    __tablename__ = "equipment"
 
     id = Column(Integer, primary_key=True, index=True)
-
-    # Basic Equipment Information
-    eut_name = Column(String, nullable=False)
-    eut_quantity = Column(Integer, nullable=False)
+    # Step 1: Product Details
+    name = Column(String, nullable=False)
     manufacturer_address = Column(Text, nullable=False)
-    model_no = Column(String, nullable=False)
-    serial_no = Column(String, nullable=False)
-
-    # Technical Specifications
-    supply_voltage = Column(String, nullable=False)
+    model_number = Column(String, nullable=False)
+    serial_number = Column(String, nullable=False)
+    quantity = Column(Integer, nullable=False)
+    # Step 2: Technical Specification Documents (store as filenames or URLs)
+    circuit_diagram = Column(String, nullable=True)
+    pcb_gerber_files = Column(String, nullable=True)
+    block_diagram = Column(String, nullable=True)
+    component_list = Column(String, nullable=True)
+    ratings_power_spec = Column(String, nullable=True)
+    firmware_details = Column(String, nullable=True)
+    # Step 3: Testing Requirements
+    test_types = Column(String, nullable=True)  # e.g. "Pre-Compliance,Final"
+    selected_tests = Column(Text, nullable=True)  # JSON string or comma-separated
+    # Step 4: Testing Standards
+    selected_standards = Column(Text, nullable=True)  # JSON string or comma-separated
+    # Step 5: Lab selection and Review
+    selected_lab = Column(String, nullable=True)
+    # Submission status
+    status = Column(String, default="submitted")
+    # Additional fields
+    supply_voltage = Column(String, nullable=True)
     operating_frequency = Column(String, nullable=True)
-    current = Column(String, nullable=False)
-    weight_kg = Column(Float, nullable=False)
-
-    length_mm = Column(Float, nullable=False)
-    width_mm = Column(Float, nullable=False)
-    height_mm = Column(Float, nullable=False)
-
-    # Connectivity & Interfaces
-    power_ports = Column(String, nullable=False)
-    signal_ports = Column(String, nullable=False)
-
-    # Software Information
+    current = Column(String, nullable=True)
+    weight_kg = Column(Float, nullable=True)
+    length_mm = Column(Float, nullable=True)
+    width_mm = Column(Float, nullable=True)
+    height_mm = Column(Float, nullable=True)
+    power_ports = Column(String, nullable=True)
+    signal_ports = Column(String, nullable=True)
     software_name = Column(String, nullable=True)
     software_version = Column(String, nullable=True)
-
-    # Industry / Application
-    industry_type = Column(String, nullable=False)
+    industry_type = Column(String, nullable=True)
     other_industry = Column(String, nullable=True)
-
-    # Testing & Notes
     preferred_testing_date = Column(Date, nullable=True)
     additional_notes = Column(Text, nullable=True)

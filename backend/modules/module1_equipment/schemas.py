@@ -2,41 +2,53 @@
 # Location: backend/modules/module1_equipment/schemas.py
 
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 from datetime import date
 
-# Schema for Equipment Information
-class EquipmentCreate(BaseModel):
-    eut_name: str
-    eut_quantity: int
+class EquipmentBase(BaseModel):
+    # Step 1
+    name: str
     manufacturer_address: str
-    model_no: str
-    serial_no: str
-
-    supply_voltage: str
+    model_number: str
+    serial_number: str
+    quantity: int
+    # Step 2
+    circuit_diagram: Optional[str] = None
+    pcb_gerber_files: Optional[str] = None
+    block_diagram: Optional[str] = None
+    component_list: Optional[str] = None
+    ratings_power_spec: Optional[str] = None
+    firmware_details: Optional[str] = None
+    # Step 3
+    test_types: Optional[str] = None
+    selected_tests: Optional[str] = None
+    # Step 4
+    selected_standards: Optional[str] = None
+    # Step 5
+    selected_lab: Optional[str] = None
+    # Additional
+    supply_voltage: Optional[str] = None
     operating_frequency: Optional[str] = None
-    current: str
-    weight_kg: float
-
-    length_mm: float
-    width_mm: float
-    height_mm: float
-
-    power_ports: str
-    signal_ports: str
-
+    current: Optional[str] = None
+    weight_kg: Optional[float] = None
+    length_mm: Optional[float] = None
+    width_mm: Optional[float] = None
+    height_mm: Optional[float] = None
+    power_ports: Optional[str] = None
+    signal_ports: Optional[str] = None
     software_name: Optional[str] = None
     software_version: Optional[str] = None
-
-    industry_type: str
+    industry_type: Optional[str] = None
     other_industry: Optional[str] = None
-
     preferred_testing_date: Optional[date] = None
     additional_notes: Optional[str] = None
 
-# Schema for Equipment Response
-class EquipmentResponse(EquipmentCreate):
+class EquipmentCreate(EquipmentBase):
+    pass
+
+class EquipmentResponse(EquipmentBase):
     id: int
+    status: str
 
     class Config:
-        from_attributes = True
+        orm_mode = True
