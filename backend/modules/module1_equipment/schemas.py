@@ -52,3 +52,19 @@ class EquipmentResponse(EquipmentBase):
 
     class Config:
         orm_mode = True
+
+
+class CustomerDetailsCreate(BaseModel):
+    organization: str
+    industry: List[str]
+    contact_person: str
+    preferable_dates: str
+    designation: str
+    mobile: str
+    email: str
+    address: str
+
+class CustomerDetailsResponse(CustomerDetailsCreate):
+    id: int
+    class Config:
+        orm_mode = True

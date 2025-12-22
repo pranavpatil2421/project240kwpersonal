@@ -30,7 +30,7 @@ def test_create_and_get_equipment():
         "preferred_testing_date": None,
         "additional_notes": "None"
     }
-    response = client.post("/api/module1/equipment", json=payload)
+    response = client.post("/api/equipment", json=payload)
     assert response.status_code == 200
     data = response.json()
     assert data["name"] == "Test Device"

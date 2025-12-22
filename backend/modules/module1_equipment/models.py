@@ -47,3 +47,15 @@ class Equipment(Base):
     other_industry = Column(String, nullable=True)
     preferred_testing_date = Column(Date, nullable=True)
     additional_notes = Column(Text, nullable=True)
+
+class CustomerDetails(Base):
+    __tablename__ = "customer_details"
+    id = Column(Integer, primary_key=True, index=True)
+    organization = Column(String)
+    industry = Column(Text)  # Store as comma-separated or JSON string
+    contact_person = Column(String)
+    preferable_dates = Column(String)
+    designation = Column(String)
+    mobile = Column(String)
+    email = Column(String)
+    address = Column(Text)

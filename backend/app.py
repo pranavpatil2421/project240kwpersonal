@@ -33,6 +33,15 @@ def serve_page2():
 def serve_page3():
     return FileResponse(os.path.join(FRONTEND_DIR, "page3.html"))
 
+@app.get("/testing-info", include_in_schema=False)
+def serve_testing_info():
+    return FileResponse(os.path.join(FRONTEND_DIR, "testing-info.html"))
+
+@app.get("/eut-details", include_in_schema=False)
+def serve_eut_details():
+    return FileResponse(os.path.join(FRONTEND_DIR, "eut-details.html"))
+
+
 # Register API routes
 app.include_router(router)
 

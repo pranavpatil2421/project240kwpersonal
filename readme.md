@@ -1,5 +1,5 @@
 
-# EUT Certification Platform
+# Testing Facility Selector module
 
 ## Setup
 
@@ -8,12 +8,7 @@
    pip install -r requirements.txt
    ```
 
-2. Run Alembic migrations:
-   ```
-   alembic upgrade head
-   ```
-
-3. Start the server:
+2. Start the server:
    ```
    python main.py
    ```
