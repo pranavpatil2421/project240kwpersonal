@@ -8,6 +8,7 @@ How to run the app
 2. Move to the path of directory to rootfolder
 3. Create/Use Virtual environment add all requirments into your environment
 4. Run with python main.py
+5. connect to localhost with http://localhost:8000/ for HomePage
 
 ----------------------------------
 
