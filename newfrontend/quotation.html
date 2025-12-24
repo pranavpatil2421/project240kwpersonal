@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>240kW Lab Selection</title>
+    <link rel="stylesheet" href="static/css/style_5.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="step done">Product Details</div>
+            <div class="step done">Technical Specification Documents</div>
+            <div class="step done">Testing Requirements</div>
+            <div class="step done">Testing Standards</div>
+            <div class="step active">Lab Selection and Review</div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+
+            <!-- Labs & Region -->
+            <section class="card">
+                <h3>Labs</h3>
+                <hr>
+
+                <p class="section-title">Select Region</p>
+                <div class="row">
+                    <select id="country">
+                        <option>India</option>
+                    </select>
+
+                    <select id="state">
+                        <option value="">State</option>
+                        <option>Maharashtra</option>
+                        <option>Karnataka</option>
+                        <option>Tamil Nadu</option>
+                        <option>Delhi NCR</option>
+                    </select>
+
+                    <select id="city">
+                        <option value="">City</option>
+                    </select>
+                </div>
+
+                <p class="section-title">Recommended Labs</p>
+                <div class="labs-box">
+                    <p class="hint">Select state and city to view labs</p>
+                </div>
+            </section>
+
+            <!-- Review -->
+            <section class="card">
+                <h3>Review</h3>
+                <hr>
+
+                <div class="review-box">
+                    <p>
+                        <strong>Name of EUT:</strong>
+                        <span id="review-eut" class="placeholder"></span>
+                    </p>
+
+                    <p>
+                        <strong>Technical Specification Documents:</strong>
+                    </p>
+                    <ul id="review-docs"></ul>
+
+                    <p>
+                        <strong>Testing Requirements:</strong>
+                        <span id="review-req" class="placeholder"></span>
+                    </p>
+
+                    <p>
+                        <strong>Testing Standards:</strong>
+                        <span id="review-std" class="placeholder"></span>
+                    </p>
+                </div>
+            </section>
+
+
+            <!-- Estimate -->
+            <section class="estimate">
+                <div>
+                    <small>Estimated Time</small>
+                    <strong>24–48 hrs</strong>
+                </div>
+
+                <div class="ai-text">
+                    Our AI will instantly generate an approximate cost based on your inputs
+                </div>
+
+                <div>
+                    <small>Estimated Price</small>
+                    <strong>$400</strong>
+                </div>
+            </section>
+
+            <div class="card-footer space-between">
+                <button class="secondary" onclick="goBack()">BACK</button>
+                <button id="quoteBtn">Get Quotation</button>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="/static/js/quotation.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,239 @@
+/* Base */
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #f6f8fc;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ======================
+   Sidebar
+====================== */
+.sidebar {
+    width: 260px;
+    background: #ffffff;
+    padding: 30px 20px;
+    border-right: 1px solid #e5e7eb;
+    box-sizing: border-box;
+}
+
+.step {
+    padding: 14px 12px;
+    margin-bottom: 6px;
+    font-size: 15px;
+    color: #9ca3af;
+    border-radius: 6px;
+}
+
+.step.active {
+    background: #eef2ff;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.step.done {
+    color: #10b981;
+    font-weight: 500;
+}
+
+/* ======================
+   Main Content
+====================== */
+.content {
+    flex: 1;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+/* ======================
+   Card Layout
+====================== */
+.card {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+}
+
+.card h3 {
+    margin: 0;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 15px 0 25px;
+}
+
+/* ======================
+   Forms
+====================== */
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row > div {
+    flex: 1;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #374151;
+}
+
+select,
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+}
+
+/* ======================
+   Card Footer (NEXT btn)
+====================== */
+.card-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* ======================
+   Buttons
+====================== */
+button {
+    padding: 12px 32px;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* ======================
+   Labs
+====================== */
+
+/* ======================
+   Recommended Labs
+====================== */
+.lab-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 8px;
+    font-size: 14px;
+    color: #374151;
+    cursor: pointer;
+}
+
+.lab-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.lab-item:hover {
+    background: #f6f8fc;
+    border-radius: 6px;
+}
+
+.labs-box {
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 10px;
+    max-height: 160px;
+    overflow-y: auto;
+}
+
+.labs-box label {
+    display: block;
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.hint {
+    font-size: 13px;
+    color: #9ca3af;
+}
+
+/* ======================
+   Review
+====================== */
+.review-box p {
+    margin: 12px 0;
+    font-size: 14px;
+}
+
+.placeholder {
+    color: #6b7280;
+    font-style: italic;
+}
+
+/* ======================
+   Estimate Section
+====================== */
+.estimate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #eef2ff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.ai-text {
+    text-align: center;
+    font-size: 13px;
+    color: #4b5563;
+    max-width: 260px;
+}
+
+/* ======================
+   Checkbox Groups
+====================== */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #374151;
+    cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* Card footer alignment */
+.card-footer.space-between {
+    justify-content: space-between;
+}
+
+/* Secondary (Back) button */
+button.secondary {
+    background: #e5e7eb;
+    color: #374151;
+}

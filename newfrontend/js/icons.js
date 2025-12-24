@@ -1,0 +1,9 @@
+const FileTextIcon = () => <span>📄</span>;
+const UploadIcon = () => <span>⬆️</span>;
+const CheckIcon = () => <span>✅</span>;
+const DeleteIcon = () => <span>❌</span>;
+const LayersIcon = () => <span>🧩</span>;
+const CpuIcon = () => <span>💻</span>;
+const ListIcon = () => <span>📋</span>;
+const ZapIcon = () => <span>⚡</span>;
+const CodeIcon = () => <span>🧠</span>;

@@ -29,6 +29,10 @@ class Settings:
     # Logging
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
 
+    #Upload directory
+    UPLOAD_DIR = "uploads"
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
+
 # Cache settings instance
 @lru_cache()
 def get_settings() -> Settings:

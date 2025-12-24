@@ -2,9 +2,10 @@
 # Location: backend/modules/module1_equipment/schemas.py
 
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from datetime import date
 
+# schema for Equipment Base class
 class EquipmentBase(BaseModel):
     # Step 1
     name: str
@@ -43,8 +44,13 @@ class EquipmentBase(BaseModel):
     preferred_testing_date: Optional[date] = None
     additional_notes: Optional[str] = None
 
+# Schema for Creating Equipment 
 class EquipmentCreate(EquipmentBase):
-    pass
+    name: str
+    manufacturer_address: Optional[str] = None
+    model_number: Optional[str] = None
+    serial_number: Optional[str] = None
+    quantity: Optional[int] = None
 
 class EquipmentResponse(EquipmentBase):
     id: int
@@ -58,8 +64,8 @@ class CustomerDetailsCreate(BaseModel):
     organization: str
     industry: List[str]
     contact_person: str
-    preferable_dates: str
-    designation: str
+    preferable_dates: Optional[str] = None
+    designation: Optional[str] = None
     mobile: str
     email: str
     address: str
@@ -68,3 +74,46 @@ class CustomerDetailsResponse(CustomerDetailsCreate):
     id: int
     class Config:
         orm_mode = True
+
+
+class TestingStandardsPayload(BaseModel):
+    regions: List[str]
+    recommended: List[str]
+    preferred: List[str]
+
+
+class LabSelectionReviewCreate(BaseModel):
+    product_id: str
+    selected_labs: List[str]
+    customer_review: Optional[str] = None
+    status: str = "SUBMITTED"
+
+class LabSelectionReviewResponse(LabSelectionReviewCreate):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+class TestingRequirementsCreate(BaseModel):
+    product_id: str
+    testing_requirements: Any
+
+class TestingRequirementsResponse(TestingRequirementsCreate):
+    id: int
+    class Config:
+        orm_mode = True
+
+
+class QuotationCreate(BaseModel):
+    eut_name: str
+    state: str
+    city: str
+    selected_labs: List[str]
+    testing_requirements: str
+    testing_standards: str
+
+class QuotationResponse(BaseModel):
+    quotation_id: int
+    estimated_time: str
+    estimated_price: str

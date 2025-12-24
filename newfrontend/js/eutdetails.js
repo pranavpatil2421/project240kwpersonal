@@ -1,5 +1,7 @@
 function EUTDetails() {
   const [formData, setFormData] = React.useState({});
+  const [submitting, setSubmitting] = React.useState(false);
+
   const fieldsLeft = [
     'Name of EUT',
     'Quantity of EUT',
@@ -22,6 +24,7 @@ function EUTDetails() {
   ];
 
   const handleSubmit = async () => {
+    setSubmitting(true);
     const payload = {
       name: formData["Name of EUT"] || "",
       quantity: Number(formData["Quantity of EUT"]) || 1,
@@ -43,6 +46,7 @@ function EUTDetails() {
     // Check required fields
     if (!payload.name || !payload.manufacturer_address || !payload.model_number || !payload.serial_number) {
       alert("Please fill all required fields.");
+      setSubmitting(false);
       return;
     }
     const response = await fetch("/api/equipment", {
@@ -50,8 +54,10 @@ function EUTDetails() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
+    setSubmitting(false);
     if (response.ok) {
-      alert("EUT details submitted successfully!");
+      // Redirect to technical documents page
+      window.location.href = "/technical-documents";
     } else {
       const msg = await response.text();
       alert("Failed to submit EUT details: " + msg);
@@ -95,9 +101,10 @@ function EUTDetails() {
       <div className="mt-8 flex justify-end">
         <button
           onClick={handleSubmit}
-          className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
+          disabled={submitting}
         >
-          Submit EUT Details
+          {submitting ? "Submitting..." : "Submit & Next: Technical Documents"}
         </button>
       </div>
     </div>

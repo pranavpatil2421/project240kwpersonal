@@ -1,7 +1,8 @@
 # This file Created for Equipment ORM Model
 # Location: backend/modules/module1_equipment/models.py
 
-from sqlalchemy import Column, Integer, String, Float, Date, Text
+from sqlalchemy import Column, Integer, String, Float, Date, Text, ForeignKey
+from sqlalchemy.orm import relationship
 from backend.core.database import Base
 
 # ORM model for Equipment related Information
@@ -59,3 +60,31 @@ class CustomerDetails(Base):
     mobile = Column(String)
     email = Column(String)
     address = Column(Text)
+
+class TestingStandards(Base):
+    __tablename__ = "testing_standards"
+
+    id = Column(Integer, primary_key=True, index=True)
+    regions = Column(String)
+    recommended_standards = Column(String)
+    preferred_standards = Column(String)
+
+class LabSelectionReview(Base):
+    __tablename__ = "lab_selection_review"
+    id = Column(Integer, primary_key=True, index=True)
+    product_id = Column(String, nullable=False)
+    selected_labs = Column(Text, nullable=False)  # comma-separated
+    customer_review = Column(Text, nullable=True)
+    status = Column(String, default="SUBMITTED")
+
+class Quotation(Base):
+    __tablename__ = "quotation"
+    id = Column(Integer, primary_key=True, index=True)
+    eut_name = Column(String, nullable=False)
+    state = Column(String, nullable=False)
+    city = Column(String, nullable=False)
+    selected_labs = Column(Text, nullable=False)  # comma-separated
+    testing_requirements = Column(Text, nullable=True)
+    testing_standards = Column(Text, nullable=True)
+    estimated_time = Column(String, default="24–48 hrs")
+    estimated_price = Column(String, default="$400")

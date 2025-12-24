@@ -2,8 +2,9 @@
 # Location: backend/modules/module1_equipment/services.py
 
 from sqlalchemy.orm import Session
-from .models import Equipment, CustomerDetails
-from .schemas import EquipmentCreate, CustomerDetailsCreate
+from .models import Equipment, CustomerDetails, TestingStandards, LabSelectionReview, Quotation
+from .schemas import EquipmentCreate, CustomerDetailsCreate, LabSelectionReviewCreate, QuotationCreate
+import os
 
 # Functions for CRUD operations
 def create_equipment(db: Session, payload: EquipmentCreate):
@@ -22,6 +23,7 @@ def get_all_equipment(db: Session):
 def get_equipment_by_id(db: Session, equipment_id: int):
     return db.query(Equipment).filter(Equipment.id == equipment_id).first()
 
+# Creating customer Details
 def create_customer_details(db: Session, payload: CustomerDetailsCreate):
     record = CustomerDetails(
         organization=payload.organization,
@@ -65,3 +67,66 @@ def get_customer_details(db: Session):
         }
         for r in records
     ]
+
+def get_technical_documents(db: Session):
+    # Placeholder for retrieving technical document
+    pass
+
+def save_uploaded_files(form, upload_dir="uploads"):
+
+    #Save uploaded files from a Starlette FormData object.
+
+    if not os.path.exists(upload_dir):
+        os.makedirs(upload_dir)
+    files = []
+    for key in form:
+        upload = form[key]
+        filename = os.path.join(upload_dir, upload.filename)
+        contents = upload.file.read() if hasattr(upload, "file") else upload.read()
+        with open(filename, "wb") as f:
+            f.write(contents)
+        files.append(upload.filename)
+    return files
+
+def save_testing_standards(db, payload):
+    record = TestingStandards(
+        regions=", ".join(payload.regions),
+        recommended_standards=", ".join(payload.recommended),
+        preferred_standards=", ".join(payload.preferred),
+    )
+
+    db.add(record)
+    db.commit()
+    db.refresh(record)
+    return record
+
+def create_lab_selection_review(db: Session, payload: LabSelectionReviewCreate):
+    record = LabSelectionReview(
+        product_id=payload.product_id,
+        selected_labs=",".join(payload.selected_labs),
+        customer_review=payload.customer_review,
+        status=payload.status
+    )
+    db.add(record)
+    db.commit()
+    db.refresh(record)
+    return record
+
+def get_lab_selection_review_by_product(db: Session, product_id: str):
+    return db.query(LabSelectionReview).filter(LabSelectionReview.product_id == product_id).first()
+
+def create_quotation(db: Session, payload: QuotationCreate):
+    record = Quotation(
+        eut_name=payload.eut_name,
+        state=payload.state,
+        city=payload.city,
+        selected_labs=",".join(payload.selected_labs),
+        testing_requirements=payload.testing_requirements,
+        testing_standards=payload.testing_standards,
+        estimated_time="24–48 hrs",  # You can add logic for AI estimation here
+        estimated_price="$400"       # You can add logic for AI estimation here
+    )
+    db.add(record)
+    db.commit()
+    db.refresh(record)
+    return record
