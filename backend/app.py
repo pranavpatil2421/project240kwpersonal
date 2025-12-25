@@ -5,6 +5,7 @@ from fastapi import FastAPI, UploadFile, File, APIRouter, Request
 from fastapi.staticfiles import StaticFiles
 from backend.core.config import get_settings
 from backend.modules.module1_equipment.routes import router
+from backend.modules.module2_design_v_v.routes import router as design_router
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from backend.core.database import Base, engine
 from backend.modules.module1_equipment import models
@@ -16,7 +17,7 @@ settings = get_settings()
 app = FastAPI(title=settings.APP_NAME, debug=settings.DEBUG)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FRONTEND_DIR = os.path.join(BASE_DIR, "newfrontend")
+FRONTEND_DIR = os.path.join(BASE_DIR, "newfrontend/module2_design_v&v/html")
 
 # Serve all static files (including HTML, JS, CSS, images, etc.)
 app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
@@ -24,7 +25,7 @@ app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
 # Serve index.html at root
 @app.get("/", include_in_schema=False)
 def serve_index():
-    return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
+    return FileResponse(os.path.join(FRONTEND_DIR, "design.html"))
 
 @app.get("/testing-info", include_in_schema=False)
 def serve_testing_info():
@@ -54,6 +55,10 @@ def serve_quotation():
 def serve_quotation_success():
     return FileResponse(os.path.join(FRONTEND_DIR, "quotation-success.html"))
 
+@app.get("/product-details.html", include_in_schema=False)
+def serve_product_details():
+    return FileResponse(os.path.join(FRONTEND_DIR, "product-details.html"))
+
 @app.post("/upload")
 async def upload_files(request: Request):
     form = await request.form()
@@ -62,6 +67,7 @@ async def upload_files(request: Request):
 
 # Register API routes
 app.include_router(router)
+app.include_router(design_router)
 
 # Create tables
 Base.metadata.create_all(bind=engine)
