@@ -19,3 +19,12 @@ npm run dev
 ```
 
 3. Open your browser and navigate to `http://localhost:5173`
+
+
+For Python,
+0. go to backend directory
+1. Create new Environment - python -m venv envname
+2. Add activate it - evnname/scripts/activate
+3. install requirements - pip install -r requirements.txt
+4. Run Uvcorn server - python -m uvicorn app:app --reload
+
