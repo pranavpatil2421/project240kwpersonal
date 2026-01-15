@@ -14,7 +14,6 @@ How to run the app
 
 # This Module contains Module1 and page 1 code completed.
 
-
 -----------------------------------
 
 # Based on folder structure you can 

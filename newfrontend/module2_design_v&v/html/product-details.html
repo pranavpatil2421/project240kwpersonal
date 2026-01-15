@@ -1,0 +1,113 @@
+<!--m2p1 product details addition page-->>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Product Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-gray-50">
+  <div id="root"></div>
+  <script type="text/babel">
+    function ProductDetailsForm() {
+      const [form, setForm] = React.useState({
+        eutName: "",
+        eutQuantity: "",
+        manufacturer: "",
+        modelNo: "",
+        serialNo: "",
+        supplyVoltage: "",
+        operatingFrequency: "",
+        current: "",
+        weight: "",
+        length: "",
+        width: "",
+        height: "",
+        powerPorts: "",
+        signalLines: "",
+        softwareName: "",
+        softwareVersion: ""
+      });
+      const [loading, setLoading] = React.useState(false);
+      const [message, setMessage] = React.useState("");
+
+      function handleChange(e) {
+        setForm({ ...form, [e.target.name]: e.target.value });
+      }
+
+      async function handleSubmit(e) {
+        e.preventDefault();
+        setLoading(true);
+        setMessage("");
+        try {
+          const res = await fetch("/api/product-details", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(form)
+          });
+          if (res.ok) {
+            setMessage("Product details saved successfully!");
+            setForm({
+              eutName: "",
+              eutQuantity: "",
+              manufacturer: "",
+              modelNo: "",
+              serialNo: "",
+              supplyVoltage: "",
+              operatingFrequency: "",
+              current: "",
+              weight: "",
+              length: "",
+              width: "",
+              height: "",
+              powerPorts: "",
+              signalLines: "",
+              softwareName: "",
+              softwareVersion: ""
+            });
+          } else {
+            const err = await res.text();
+            setMessage("Error: " + err);
+          }
+        } catch (err) {
+          setMessage("Error: " + err.message);
+        }
+        setLoading(false);
+      }
+
+      return (
+        <div className="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow mt-12">
+          <h1 className="text-2xl font-bold mb-6 text-center">Product Details</h1>
+          <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit}>
+            <input className="border p-2 rounded" name="eutName" placeholder="EUT Name" value={form.eutName} onChange={handleChange} required />
+            <input className="border p-2 rounded" name="eutQuantity" placeholder="Quantity" value={form.eutQuantity} onChange={handleChange} required />
+            <input className="border p-2 rounded" name="manufacturer" placeholder="Manufacturer" value={form.manufacturer} onChange={handleChange} />
+            <input className="border p-2 rounded" name="modelNo" placeholder="Model No." value={form.modelNo} onChange={handleChange} />
+            <input className="border p-2 rounded" name="serialNo" placeholder="Serial No." value={form.serialNo} onChange={handleChange} />
+            <input className="border p-2 rounded" name="supplyVoltage" placeholder="Supply Voltage" value={form.supplyVoltage} onChange={handleChange} />
+            <input className="border p-2 rounded" name="operatingFrequency" placeholder="Operating Frequency" value={form.operatingFrequency} onChange={handleChange} />
+            <input className="border p-2 rounded" name="current" placeholder="Current" value={form.current} onChange={handleChange} />
+            <input className="border p-2 rounded" name="weight" placeholder="Weight (Kg)" value={form.weight} onChange={handleChange} />
+            <input className="border p-2 rounded" name="length" placeholder="Length (mm)" value={form.length} onChange={handleChange} />
+            <input className="border p-2 rounded" name="width" placeholder="Width (mm)" value={form.width} onChange={handleChange} />
+            <input className="border p-2 rounded" name="height" placeholder="Height (mm)" value={form.height} onChange={handleChange} />
+            <input className="border p-2 rounded" name="powerPorts" placeholder="No. of Power Ports and Connector Type" value={form.powerPorts} onChange={handleChange} />
+            <input className="border p-2 rounded" name="signalLines" placeholder="No. of Signal Lines and Connector Type" value={form.signalLines} onChange={handleChange} />
+            <input className="border p-2 rounded" name="softwareName" placeholder="Software Name" value={form.softwareName} onChange={handleChange} />
+            <input className="border p-2 rounded" name="softwareVersion" placeholder="Software Version" value={form.softwareVersion} onChange={handleChange} />
+            <button type="submit" className="bg-blue-600 text-white py-2 rounded mt-4" disabled={loading}>
+              {loading ? "Saving..." : "Save Product Details"}
+            </button>
+          </form>
+          {message && <div className="mt-4 text-center text-blue-600">{message}</div>}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<ProductDetailsForm />);
+  </script>
+</body>
+</html>
