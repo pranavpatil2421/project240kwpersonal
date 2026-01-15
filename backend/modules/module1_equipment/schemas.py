@@ -1,0 +1,119 @@
+# This file Created for Equipment Schemas
+# Location: backend/modules/module1_equipment/schemas.py
+
+from pydantic import BaseModel
+from typing import Optional, List, Dict, Any
+from datetime import date
+
+# schema for Equipment Base class
+class EquipmentBase(BaseModel):
+    # Step 1
+    name: str
+    manufacturer_address: str
+    model_number: str
+    serial_number: str
+    quantity: int
+    # Step 2
+    circuit_diagram: Optional[str] = None
+    pcb_gerber_files: Optional[str] = None
+    block_diagram: Optional[str] = None
+    component_list: Optional[str] = None
+    ratings_power_spec: Optional[str] = None
+    firmware_details: Optional[str] = None
+    # Step 3
+    test_types: Optional[str] = None
+    selected_tests: Optional[str] = None
+    # Step 4
+    selected_standards: Optional[str] = None
+    # Step 5
+    selected_lab: Optional[str] = None
+    # Additional
+    supply_voltage: Optional[str] = None
+    operating_frequency: Optional[str] = None
+    current: Optional[str] = None
+    weight_kg: Optional[float] = None
+    length_mm: Optional[float] = None
+    width_mm: Optional[float] = None
+    height_mm: Optional[float] = None
+    power_ports: Optional[str] = None
+    signal_ports: Optional[str] = None
+    software_name: Optional[str] = None
+    software_version: Optional[str] = None
+    industry_type: Optional[str] = None
+    other_industry: Optional[str] = None
+    preferred_testing_date: Optional[date] = None
+    additional_notes: Optional[str] = None
+
+# Schema for Creating Equipment 
+class EquipmentCreate(EquipmentBase):
+    name: str
+    manufacturer_address: Optional[str] = None
+    model_number: Optional[str] = None
+    serial_number: Optional[str] = None
+    quantity: Optional[int] = None
+
+class EquipmentResponse(EquipmentBase):
+    id: int
+    status: str
+
+    class Config:
+        orm_mode = True
+
+
+class CustomerDetailsCreate(BaseModel):
+    organization: str
+    industry: List[str]
+    contact_person: str
+    preferable_dates: Optional[str] = None
+    designation: Optional[str] = None
+    mobile: str
+    email: str
+    address: str
+
+class CustomerDetailsResponse(CustomerDetailsCreate):
+    id: int
+    class Config:
+        orm_mode = True
+
+
+class TestingStandardsPayload(BaseModel):
+    regions: List[str]
+    recommended: List[str]
+    preferred: List[str]
+
+
+class LabSelectionReviewCreate(BaseModel):
+    product_id: str
+    selected_labs: List[str]
+    customer_review: Optional[str] = None
+    status: str = "SUBMITTED"
+
+class LabSelectionReviewResponse(LabSelectionReviewCreate):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+class TestingRequirementsCreate(BaseModel):
+    product_id: str
+    testing_requirements: Any
+
+class TestingRequirementsResponse(TestingRequirementsCreate):
+    id: int
+    class Config:
+        orm_mode = True
+
+
+class QuotationCreate(BaseModel):
+    eut_name: str
+    state: str
+    city: str
+    selected_labs: List[str]
+    testing_requirements: str
+    testing_standards: str
+
+class QuotationResponse(BaseModel):
+    quotation_id: int
+    estimated_time: str
+    estimated_price: str

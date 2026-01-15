@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Testing Standards</title>
+  <link rel="stylesheet" href="/static/css/style_4.css" />
+</head>
+
+<body>
+
+<div class="page">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="step done">● Product Details</div>
+    <div class="step done">● Technical Specification Documents</div>
+    <div class="step done">● Testing Requirements</div>
+    <div class="step active">● Testing Standards</div>
+    <div class="step">● Lab Selection & Review</div>
+  </aside>
+
+  <!-- Content -->
+  <main class="content">
+
+    <h1>Testing Standards</h1>
+
+    <!-- Region Selection -->
+    <section class="card">
+      <h3>Region</h3>
+
+      <div class="region-box">
+        <select disabled>
+          <option>Country</option>
+        </select>
+
+        <div class="checkboxes">
+          <label><input type="checkbox" value="India" checked> India</label>
+          <label><input type="checkbox" value="Europe" checked> Europe</label>
+          <label><input type="checkbox" value="Asia"> Asia</label>
+        </div>
+      </div>
+
+      <div class="tags" id="region-tags"></div>
+    </section>
+
+    <!-- Standards -->
+    <section class="card grid">
+
+      <!-- Recommended -->
+      <div>
+        <h4>Recommended Standards</h4>
+        <label><input type="checkbox" checked> ESD immunity: IEC 61000-4-2</label>
+        <label><input type="checkbox" checked> Conducted RF immunity: IEC 61000-4-6</label>
+      </div>
+
+      <!-- Preferred -->
+      <div>
+        <h4>Preferred Standards</h4>
+        <label><input type="checkbox"> Cold Test: IEC 60068-2-1</label>
+        <label><input type="checkbox"> Dry Heat Test: IEC 60068-2-2</label>
+        <label><input type="checkbox"> Damp Heat (steady)</label>
+        <label><input type="checkbox"> Damp Heat (cyclic)</label>
+        <label><input type="checkbox" checked> Thermal Cycling: IEC 60068-2-14</label>
+      </div>
+
+    </section>
+
+    <!-- Selected Standards -->
+    <section class="card">
+      <h4>Selected Standards</h4>
+      <div class="tags" id="standard-tags"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <button class="secondary" onclick="history.back()">← Previous</button>
+
+      <div>
+        <button class="link" id="save-draft">Save as Draft</button>
+        <button class="primary" id="submit-standards">Next →</button>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<!-- Add the correct script reference below -->
+
+<script type="text/babel" src="/static/js/testingstandards4.js"></script>
+<button id="goto-quotation" class="primary">Go to Quotation Page</button>
+<script>
+document.getElementById("goto-quotation").onclick = function() {
+    window.location.href = "/quotation";
+};
+</script>
+</body>
+</html>
