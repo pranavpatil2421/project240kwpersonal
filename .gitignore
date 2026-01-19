@@ -7,7 +7,7 @@ __pycache__/
 *.py[cod]
 *.pyd
 
-# Virtual environments
+# Virtual environment
 .venv/
 venv/
 env/
@@ -53,3 +53,5 @@ Thumbs.db
 # ======================
 backend/database/upload/*
 !backend/database/upload/.gitkeep
+
+project240kwpersonal/
